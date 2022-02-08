@@ -1,0 +1,23 @@
+name: 'Telegram Message'
+description: 'Send Message to Kode CI/CD Telegram Group'
+
+inputs:
+  message:
+    description: 'Message to send'
+    required: true
+    default: 'Hello world from ${{ github.repository }}'
+
+  notification:
+    description: 'Push Notification'
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - uses: appleboy/telegram-action@master
+      with:
+        message: "${{ inputs.message }}"
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        disable_notification: ${{ inputs.notification }}
